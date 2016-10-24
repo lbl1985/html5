@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 		<TITLE>Task list</TITLE>
 		<link rel="stylesheet" type="text/css" href="styles/tasks.css" media="screen"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	</head>
 	<body>
 		<header>
 			<span>Task list</span>
 		</header>
 		<main>
-			<section>
+			<section id="taskCreation" class = "not">
 				<form>
 					<div>
 						<label>Task</label><input type="text" required="required" name="task" class="large" placeholder="Breakfast at Tiffanys"/>
@@ -65,7 +65,7 @@
 					</tbody>
 				</table>
 				<nav>
-					<a href="#">Add task</a>
+					<a href="#" id="btnAddTask">Add task</a>
 				</nav>
 			</section>
 		</main>
@@ -74,6 +74,18 @@
 	<script>
 		$('[required="required"').prev('label').append('<span>*</span>').children('span').addClass('required');
 		$('tbody tr:even').addClass('even');
+
+		$('#btnAddTask').click(function(evt) {
+			evt.preventDefault();
+			$('#taskCreation').removeClass('not');
+		});
+
+		$('tbody tr').click(function(evt){
+			$(evt.target).toggleClass('rowHighlight');
+			$(evt.target).siblings().toggleClass('rowHighlight');
+			// andSelf() funciton does not work for me
+			// $(evt.target).closet('td').siblings().andSelf().toggleClass('rowHighlight');
+		});
 	</script>
 
 </html>	
