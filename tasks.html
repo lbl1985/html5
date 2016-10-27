@@ -95,27 +95,51 @@
 		<footer>You have 3 tasks</footer>
 	</body>
 	<script>
-		$('[required="required"').prev('label').append('<span>*</span>').children('span').addClass('required');
-		$('tbody tr:even').addClass('even');
+		$(document).ready(function(){
+			$('[required="required"').prev('label').append('<span>*</span>').children('span').addClass('required');
+			$('tbody tr:even').addClass('even');
 
-		$('#btnAddTask').click(function(evt) {
-			evt.preventDefault();
-			$('#taskCreation').removeClass('not');
+			$('#btnAddTask').click(function(evt) {
+				evt.preventDefault();
+				$('#taskCreation').removeClass('not');
+			});
+
+			$('tbody tr').click(function(evt){
+				$(evt.target).toggleClass('rowHighlight');
+				$(evt.target).siblings().toggleClass('rowHighlight');
+				// andSelf() funciton does not work for me
+				// $(evt.target).closet('td').siblings().andSelf().toggleClass('rowHighlight');
+			});
+
+			$('#tblTasks tbody').on('click', '.deleteRow', function(evt){
+				evt.preventDefault();
+				$(evt.target).parents('tr').remove();
+			})
+
+			$('#tblTasks tbody tr:first').clone().insertAfter('#tblTasks tbody tr:last');
 		});
 
-		$('tbody tr').click(function(evt){
-			$(evt.target).toggleClass('rowHighlight');
-			$(evt.target).siblings().toggleClass('rowHighlight');
-			// andSelf() funciton does not work for me
-			// $(evt.target).closet('td').siblings().andSelf().toggleClass('rowHighlight');
-		});
-
-		$('#tblTasks tbody').on('click', '.deleteRow', function(evt){
-			evt.preventDefault();
-			$(evt.target).parents('tr').remove();
-		})
-
-		$('#tblTasks tbody tr:first').clone().insertAfter('#tblTasks tbody tr:last');
+		(function($) {
+			$.fn.extend({
+				toObject:function(){
+					var result = {}
+					$.each(this.serializeArray(), function(i, v){
+						result[v.name] = v.value;
+					});
+					return result;
+				},
+				fromObject:function(obj){
+					$.each(this.find(':input'), function(i, v){
+						var name = $(v).attr('name');
+						if(obj[name]) {
+							$(v).val(obj[name]);
+						} else {
+							$(v).val('');
+						}
+					});
+				}
+			});
+		})(jQuery);
 	</script>
 
 </html>	
