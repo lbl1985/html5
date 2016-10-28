@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -6,7 +6,7 @@
 		<TITLE>Task list</TITLE>
 		<link rel="stylesheet" type="text/css" href="styles/tasks.css" media="screen"/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-		<script src="scripts/jquery-tmpl.js"></script>
+		<script src="scripts/jquery.tmpl.js"></script>
 	</head>
 	<body>
 		<header>
@@ -29,7 +29,8 @@
 						</select>
 					</div>
 					<nav>
-						<a href="#">Save task</a><a href="#">Clear task</a>
+						<a href="#" id="saveTask">Save task</a>
+                        <a href="#">Clear task</a>
 					</nav>
 				</form>
 			</section>
@@ -95,6 +96,7 @@
 		</main>
 		<footer>You have 3 tasks</footer>
 	</body>
+
 	<script>
 		$(document).ready(function(){
 			$('[required="required"').prev('label').append('<span>*</span>').children('span').addClass('required');
@@ -117,7 +119,13 @@
 				$(evt.target).parents('tr').remove();
 			})
 
-			$('#tblTasks tbody tr:first').clone().insertAfter('#tblTasks tbody tr:last');
+			// $('#tblTasks tbody tr:first').clone().insertAfter('#tblTasks tbody tr:last');
+
+			$('#saveTask').click(function (evt) {
+			    evt.preventDefault();
+			    var task = $('form').toObject();
+			    $('#taskRow').tmpl(task).appendTo($('#tblTasks tbody'));
+			});
 		});
 
 		(function($) {
@@ -144,7 +152,18 @@
 	</script>
 
 	<script id="taskRow" type="text/x-jQuery-tmpl">
-	
-
+	<tr>
+        <td>${task}</td>
+        <td><time datetime="${requiredBy}">${requiredBy}</time></td>
+        <td>${category}</td>
+        <td>
+            <nav>
+                <a href="#">Edit</a>
+                <a href="#">Complete</a>
+                <a href="#" class="deleteRow">Delete</a>
+            </nav>
+        </td>
+	</tr>
 	</script>
+	
 </html>	
