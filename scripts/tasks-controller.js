@@ -6,8 +6,9 @@ tasksController = function(){
 		init:function(page) {
 			if(!initialised) {
 				taskPage = page;
-				$(taskPage).find('[required="required"]').prev('label').append('<span>*</span>').children('span').addclass('required');
-				$(taskPage).find('tbody tr:even').addclass('even');
+
+				$(taskPage).find('[required="required"]').prev('label').append('<span>*</span>').children('span').addClass('required');
+				$(taskPage).find('tbody tr:even').addClass('even');
 
 				$(taskPage).find("#btnAddTask").click(function(evt) {
 					evt.preventDefault();

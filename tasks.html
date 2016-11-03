@@ -5,7 +5,8 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 		<TITLE>Task list</TITLE>
 		<link rel="stylesheet" type="text/css" href="styles/tasks.css" media="screen"/>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		// <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script src="scripts/jquery-3.1.1.min.js"></script>
 		<script src="scripts/jquery.tmpl.js"></script>
 		<script src="scripts/jquery-serialization.js"></script>
 		<script src="scripts/tasks-controller.js"></script>
@@ -99,7 +100,10 @@
 		<footer>You have 3 tasks</footer>
 	</body>
 
-	// <script>
+	<script>
+		$(document).ready(function(){
+			tasksController.init($('#taskPage'));
+		})
 	// 	$(document).ready(function(){
 	// 		$('[required="required"').prev('label').append('<span>*</span>').children('span').addClass('required');
 	// 		$('tbody tr:even').addClass('even');
@@ -129,7 +133,7 @@
 	// 		    $('#taskRow').tmpl(task).appendTo($('#tblTasks tbody'));
 	// 		});
 	// 	});
-	// </script>
+	</script>
 
 	<script id="taskRow" type="text/x-jQuery-tmpl">
 	<tr>
